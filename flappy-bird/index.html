@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0d1b2a" />
+<title>Flappy Bird</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🐤</text></svg>" />
+</head>
+<body>
+
+<div class="stage">
+  <div class="frame">
+    <canvas id="game" width="400" height="600" aria-label="Flappy Bird game canvas" role="img"></canvas>
+
+    <!-- Heads-up display -->
+    <div class="hud" id="hud">
+      <div class="score" id="score">0</div>
+      <div class="tools">
+        <button class="icon-btn" id="btnSound" type="button" title="Sound (M)" aria-label="Toggle sound">
+          <svg viewBox="0 0 24 24" class="ic-on"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7" class="stroke"/><path d="M19 6a8.5 8.5 0 0 1 0 12" class="stroke"/></svg>
+          <svg viewBox="0 0 24 24" class="ic-off"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9.5l5 5m0-5l-5 5" class="stroke"/></svg>
+        </button>
+        <button class="icon-btn" id="btnPause" type="button" title="Pause (P)" aria-label="Pause game">
+          <svg viewBox="0 0 24 24" class="ic-on"><path d="M9 5h2.5v14H9zM12.5 5H15v14h-2.5z"/></svg>
+          <svg viewBox="0 0 24 24" class="ic-off"><path d="M8 5l11 7-11 7z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Start screen -->
+    <div class="overlay show" id="screenStart">
+      <div class="panel">
+        <h1 class="title">FLAPPY<span>BIRD</span></h1>
+        <p class="tagline">One tap. Infinite pipes. Zero mercy.</p>
+
+        <button class="btn primary" id="btnPlay" type="button">
+          <svg viewBox="0 0 24 24" class="btn-ic"><path d="M8 5l11 7-11 7z"/></svg>
+          Play
+        </button>
+
+        <div class="keys">
+          <span><kbd>Space</kbd> / <kbd>Click</kbd> flap</span>
+          <span><kbd>P</kbd> pause</span>
+          <span><kbd>M</kbd> mute</span>
+        </div>
+
+        <div class="best-line">Best <b id="startBest">0</b></div>
+      </div>
+    </div>
+
+    <!-- Game over screen -->
+    <div class="overlay" id="screenOver">
+      <div class="panel">
+        <div class="ribbon">Game Over</div>
+
+        <div class="medal-wrap">
+          <div class="medal" id="medal"><span id="medalIcon">—</span></div>
+          <div class="medal-label" id="medalLabel">No medal yet</div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-k">Score</span>
+            <span class="stat-v" id="finalScore">0</span>
+          </div>
+          <div class="divider"></div>
+          <div class="stat">
+            <span class="stat-k">Best</span>
+            <span class="stat-v" id="finalBest">0</span>
+          </div>
+        </div>
+
+        <div class="newbest" id="newBest">New Best!</div>
+
+        <div class="actions">
+          <button class="btn primary" id="btnRetry" type="button">
+            <svg viewBox="0 0 24 24" class="btn-ic"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>
+            Play Again
+          </button>
+          <button class="btn ghost" id="btnMenu" type="button">Menu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pause screen -->
+    <div class="overlay soft" id="screenPause">
+      <div class="panel slim">
+        <h2 class="paused-title">Paused</h2>
+        <button class="btn primary" id="btnResume" type="button">
+          <svg viewBox="0 0 24 24" class="btn-ic"><path d="M8 5l11 7-11 7z"/></svg>
+          Resume
+        </button>
+        <button class="btn ghost" id="btnQuit" type="button">Quit to menu</button>
+      </div>
+    </div>
+
+    <div class="flash" id="flash"></div>
+  </div>
+
+  <p class="hint">Tap the screen or press <kbd>Space</kbd> to flap</p>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
