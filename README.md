@@ -15,7 +15,7 @@ Each problem lives in its own folder, named after the LeetCode slug:
 ├── README.md      # Problem statement
 └── solution.cpp   # Accepted solution
 ```
-
+<!--
 ---
 
 ## Progress
@@ -27,10 +27,10 @@ Each problem lives in its own folder, named after the LeetCode slug:
 | Hard       | —      |
 | **Total**  | **—**  |
 
-*Update these as you go, or drop this table if you'd rather not maintain it.*
+
 
 ---
-
+-->
 ## Patterns Covered
 
 Practice is organised around recurring problem-solving patterns rather than isolated questions:
@@ -50,7 +50,7 @@ Practice is organised around recurring problem-solving patterns rather than isol
 - Intervals
 - Bit Manipulation
 
-*Trim this list to what you've actually covered — an accurate short list reads better than an aspirational long one.*
+
 
 ---
 
