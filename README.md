@@ -68,5 +68,5 @@ Solutions here are my own accepted submissions. Where a problem has multiple via
 
 ## Connect
 
-- **LeetCode:** [your-profile](https://leetcode.com/AyushDev007)
-- **LinkedIn:** [your-profile](https://linkedin.com/in/ayush-kumar-1242b9234/)
+- **LeetCode:** [Profile](https://leetcode.com/AyushDev007)
+- **LinkedIn:** [Profile](https://linkedin.com/in/ayush-kumar-1242b9234/)
