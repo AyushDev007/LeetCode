@@ -1,113 +1,54 @@
 class LRUCache {
 public:
+    int cap;
 
-    class Node {
-    public:
-        int key;
-        int value;
-        Node* prev;
-        Node* next;
-
-        Node(int k, int v) {
-            key = k;
-            value = v;
-            prev = NULL;
-            next = NULL;
-        }
-    };
-
-    int capacity;
-
-    unordered_map<int, Node*> mp;
-
-    Node* head;
-    Node* tail;
-
+    list<pair<int, int>> lru;
+    unordered_map<int, list<pair<int, int>>::iterator> mp;
 
     LRUCache(int capacity) {
-        this->capacity = capacity;
-
-        head = new Node(-1, -1);
-        tail = new Node(-1, -1);
-
-        head->next = tail;
-        tail->prev = head;
+        cap = capacity;
     }
-
-
-    // Add node just after head
-    void addNode(Node* node) {
-
-        node->next = head->next;
-        node->prev = head;
-
-        head->next->prev = node;
-        head->next = node;
-    }
-
-
-    // Remove a node from the list
-    void deleteNode(Node* node) {
-
-        node->prev->next = node->next;
-        node->next->prev = node->prev;
-    }
-
 
     int get(int key) {
 
-        // Key doesn't exist
-        if (mp.find(key) == mp.end()) {
+        if (mp.find(key) == mp.end())
             return -1;
-        }
 
-        Node* node = mp[key];
+        auto it = mp[key];
 
-        // Since we used it, make it most recently used
-        deleteNode(node);
-        addNode(node);
+        int value = it->second;
 
-        return node->value;
+        // Move this key to front
+        lru.erase(it);
+        lru.push_front({key, value});
+
+        // Update iterator
+        mp[key] = lru.begin();
+
+        return value;
     }
-
 
     void put(int key, int value) {
 
-        // Key already exists
+        // Already exists
         if (mp.find(key) != mp.end()) {
 
-            Node* node = mp[key];
-
-            node->value = value;
-
-            // Make it most recently used
-            deleteNode(node);
-            addNode(node);
-
-            return;
+            lru.erase(mp[key]);
         }
 
+        // Add as most recently used
+        lru.push_front({key, value});
 
-        // Create new node
-        Node* node = new Node(key, value);
+        mp[key] = lru.begin();
 
-        mp[key] = node;
+        // Capacity exceeded
+        if (lru.size() > cap) {
 
-        // Add to front
-        addNode(node);
+            int keyToRemove = lru.back().first;
 
+            mp.erase(keyToRemove);
 
-        // Cache exceeded capacity
-        if (mp.size() > capacity) {
-
-            // Least recently used node
-            Node* lru = tail->prev;
-
-            deleteNode(lru);
-
-            mp.erase(lru->key);
-
-            delete lru;
+            lru.pop_back();
         }
     }
 };
