@@ -1,18 +1,16 @@
 class Solution {
+    static constexpr long long MOD = 1e9 + 7;
+    long long power(long long b, long long e) {
+        long long r = 1; b %= MOD;
+        while (e) { if (e & 1) r = r * b % MOD; b = b * b % MOD; e >>= 1; }
+        return r;
+    }
 public:
     int numberOfSets(int n, int k) {
-        const long long MOD = 1e9 + 7;
-        vector<long long> A(k + 1, 0), B(k + 1, 0);
-        A[0] = 1;
-        for (int i = 1; i < n; i++) {
-            for (int j = k; j >= 1; j--) {   // descending: j-1 still holds row i-1
-                long long newA = (A[j] + B[j]) % MOD;
-                long long newB = (B[j] + A[j-1] + B[j-1]) % MOD;
-                A[j] = newA;
-                B[j] = newB;
-            }
-            // j = 0: A[0] stays 1, B[0] stays 0
-        }
-        return (A[k] + B[k]) % MOD;
+        int N = n + k - 1, R = 2 * k;
+        vector<long long> fact(N + 1, 1);
+        for (int i = 1; i <= N; i++) fact[i] = fact[i-1] * i % MOD;
+        return fact[N] * power(fact[R], MOD - 2) % MOD
+                       * power(fact[N - R], MOD - 2) % MOD;
     }
 };
