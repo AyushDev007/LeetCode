@@ -1,21 +1,31 @@
 class Solution {
 public:
     string reverseParentheses(string s) {
-        stack<string> st;
-        string cur;
+        int n = s.size();
+        vector<int> pair(n, 0);
+        stack<int> st;
 
-        for (char c : s) {
-            if (c == '(') {
-                st.push(cur);        // save what we had
-                cur.clear();         // start fresh for this level
-            } else if (c == ')') {
-                reverse(cur.begin(), cur.end());
-                cur = st.top() + cur;
-                st.pop();
-            } else {
-                cur += c;
+        // pass 1: match brackets
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '(') st.push(i);
+            else if (s[i] == ')') {
+                int j = st.top(); st.pop();
+                pair[i] = j;
+                pair[j] = i;
             }
         }
-        return cur;
+
+        // pass 2: walk, flipping direction at each bracket
+        string res;
+        res.reserve(n);
+        for (int i = 0, dir = 1; i < n; i += dir) {
+            if (s[i] == '(' || s[i] == ')') {
+                i = pair[i];        // teleport to the partner
+                dir = -dir;         // and reverse travel direction
+            } else {
+                res += s[i];
+            }
+        }
+        return res;
     }
 };
